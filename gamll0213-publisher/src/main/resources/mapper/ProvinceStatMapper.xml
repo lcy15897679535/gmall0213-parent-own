@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.gamll0213publisher.mapper.ProvinceStatMapper">
+    <select id="getProvinceSum" resultMap="rsMap">
+        select province_area_code,sum(amount) sum_amount from province_amount_stat
+        where stat_date  &gt;#{startDt}  and  stat_date &lt;#{endDt}
+        group by province_name,province_area_code
+    </select>
+    <resultMap id="rsMap" type="java.util.Map" autoMapping="true"></resultMap>
+</mapper>
