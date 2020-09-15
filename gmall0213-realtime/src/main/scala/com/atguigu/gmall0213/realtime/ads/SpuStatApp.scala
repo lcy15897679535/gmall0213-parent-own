@@ -9,6 +9,7 @@ import com.atguigu.gmall0213.realtime.util.{MykafkaUtil, OffsetManagerM}
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.common.TopicPartition
 import org.apache.spark.SparkConf
+import org.apache.spark.rdd.RDD
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.streaming.dstream.{DStream, InputDStream}
 import org.apache.spark.streaming.kafka010.{HasOffsetRanges, OffsetRange}
@@ -61,6 +62,7 @@ object SpuStatApp {
         //聚合
         val SpuAmountDstream: DStream[(String, Double)] = orderWideDstream.map(orderWide=>(orderWide.spu_id+"_"+orderWide.spu_name,orderWide.final_detail_amount))
         val SpuAmountSumDstream: DStream[(String, Double)] = SpuAmountDstream.reduceByKey(_+_)
+
 
         SpuAmountSumDstream.print(1000)
 
